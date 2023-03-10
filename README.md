@@ -13,7 +13,7 @@ These modules are included in the standard library, so no external dependencies 
 ## Usage
 To use the script, run the following command:
 ```
-python file_sync.py --src /path/to/source/directory --dst /path/to/target/directory --interval 60 --log /path/to/log/file.log
+python sync_folders.py --src /path/to/source/directory --dst /path/to/target/directory --interval 60 --log /path/to/log/file.log
 ```
 * `--src` is the path to the source directory that you want to synchronize.
 * `--dst` is the path to the target directory that you want to synchronize with.
