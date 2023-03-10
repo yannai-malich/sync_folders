@@ -1,8 +1,7 @@
-import os, sys, logging, argparse
+import os, logging, time, argparse
 from hashlib import md5
 
 def get_args():
-    # Creating an ArgumentParser object
     parser = argparse.ArgumentParser()
     parser.add_argument('--src', type=str, required=True,
                         help='Source directory to be synchronized')
@@ -12,10 +11,7 @@ def get_args():
                         help='Synchronization interval in seconds')
     parser.add_argument('--log', type=str, required=True,
                     help='Log file path')
-    # Parsing the command line arguments
     args = parser.parse_args()
-
-    # Creating the source and target directories if they don't exist
     for folder_name in [args.src, args.dst]:
         if not os.path.exists(folder_name):
             os.makedirs(folder_name)
