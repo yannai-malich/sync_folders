@@ -1,5 +1,9 @@
 # Folder Synchronization Script
-This is a Python script that synchronizes two directories by copying and updating files from the source directory to the target directory. It uses the MD5 hash algorithm to compare the content of files and decides whether to update or copy them. It also removes files and directories that exist in the target directory but not in the source directory
+This is a Python script that synchronizes two directories by copying and updating files from the source directory to the target directory. It uses the MD5 hash algorithm to compare the content of files and decides whether to update or copy them. It also removes files and directories that exist in the target directory but not in the source directory.
+
+## Logging
+This script logs its actions using the Python logging module. A log file is created at the specified path, and all log messages are written to this file. Additionally, the log messages are printed on the console using a StreamHandler().
+
 ## Dependencies
 The script uses the following Python modules:
 * `os`
