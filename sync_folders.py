@@ -30,29 +30,38 @@ def compare_files(src_file_path, dst_file_path):
     with open(src_file_path, 'rb') as src_f, open(dst_file_path, 'rb') as dst_f:
         return md5(src_f.read()).hexdigest() == md5(dst_f.read()).hexdigest()
 
-# Define a function that synchronizes files between two directories.
+# A function that synchronizes files between two directories.
 def sync(src_dir, dst_dir):
     log = logging.getLogger('sync')
+
+    # Iterate over the files in the source directory.
     for file_name in os.listdir(src_dir):
         src_file_path = os.path.join(src_dir, file_name)
         dst_file_path = os.path.join(dst_dir, file_name)
+
+        # If the file is a regular file, check if it exists in the target directory.
         if os.path.isfile(src_file_path):
             if not os.path.exists(dst_file_path):
+                # If the file doesn't exist in the target directory, copy it over.
                 log.info(f'Copying {src_file_path} to {dst_file_path}')
                 with open(src_file_path, 'rb') as src_f:
                     content = src_f.read()
                     with open(dst_file_path, 'wb') as dst_f:
                         dst_f.write(content)
             elif not compare_files(src_file_path, dst_file_path):
+                # If the file exists in the target directory but is different, update it.
                 log.info(f'Updating {dst_file_path} with {src_file_path}')
                 with open(src_file_path, 'rb') as src_f:
                     content = src_f.read()
                     with open(dst_file_path, 'wb') as dst_f:
                         dst_f.write(content)
+            # If the file exists in the target directory and is the same, log it as up to date.
             else:
                 log.debug(f'{dst_file_path} is up to date')
+        # If the file is a directory, recursively synchronize its contents.
         elif os.path.isdir(src_file_path):
             if not os.path.exists(dst_file_path):
+            # If the directory doesn't exist in the target directory, create it.
                 log.info(f'Creating directory {dst_file_path}')
                 os.mkdir(dst_file_path)
             sync(src_file_path, dst_file_path)
