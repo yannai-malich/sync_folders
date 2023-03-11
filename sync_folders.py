@@ -1,6 +1,7 @@
 import os, logging, time, argparse
 from hashlib import md5
 
+# A function that uses argparse to parse command line arguments.
 def get_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('--src', type=str, required=True,
@@ -12,6 +13,8 @@ def get_args():
     parser.add_argument('--log', type=str, required=True,
                     help='Log file path')
     args = parser.parse_args()
+
+    # Check if the source and target directories exist, and create them if they don't.
     for folder_name in [args.src, args.dst]:
         if not os.path.exists(folder_name):
             os.makedirs(folder_name)
@@ -20,12 +23,14 @@ def get_args():
             continue
     return args
 
+# A function that compares the MD5 hash of two files and returns True if they are the same.
 def compare_files(src_file_path, dst_file_path):
     if not os.path.exists(src_file_path):
         return False
     with open(src_file_path, 'rb') as src_f, open(dst_file_path, 'rb') as dst_f:
         return md5(src_f.read()).hexdigest() == md5(dst_f.read()).hexdigest()
 
+# Define a function that synchronizes files between two directories.
 def sync(src_dir, dst_dir):
     log = logging.getLogger('sync')
     for file_name in os.listdir(src_dir):
