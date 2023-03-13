@@ -25,8 +25,6 @@ def get_args():
 
 # A function that compares the MD5 hash of two files and returns True if they are the same.
 def compare_files(src_file_path, dst_file_path):
-    if not os.path.exists(src_file_path):
-        return False
     with open(src_file_path, 'rb') as src_f, open(dst_file_path, 'rb') as dst_f:
         return md5(src_f.read()).hexdigest() == md5(dst_f.read()).hexdigest()
 
